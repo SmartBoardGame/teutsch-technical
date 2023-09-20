@@ -14,7 +14,7 @@ function App() {
         <input type="text" value={"TODO: makee this work ;)"} id="calculator-input" />
         <img src={logo} className="react-logo" alt="logo" />
         <div>
-          <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("dot", calculatorBarIndex))}>.</button>
+          <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("neg", calculatorBarIndex))}>+/-</button>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("eql", calculatorBarIndex))}>=</button>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("CE", calculatorBarIndex))}>CE</button>
         </div>
@@ -57,7 +57,6 @@ function barUpdaterFunc(key: string, calculatorBarIndex: number) {
     ourResStr += calculatorBarIndex.toString();
 
   //define all codes for our calculator to use
-  
   if (key === "one"){
     ourResStr += "1";
   }
@@ -141,8 +140,8 @@ function barUpdaterFunc(key: string, calculatorBarIndex: number) {
       return answer;
     }
   }
-  else if (key === "dot"){
-    operator = ".";
+  else if (key === "neg"){
+    ourResStr = (Number(ourResStr) * (-1)).toString()
   }
   if (firstHalf !== ""){
   console.log(firstHalf+operator+ourResStr)
