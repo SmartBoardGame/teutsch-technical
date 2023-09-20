@@ -12,6 +12,11 @@ function App() {
         <input type="text" value={"TODO: makee this work ;)"} id="calculator-input" />
         <img src={logo} className="react-logo" alt="logo" />
         <div>
+          <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("dot", calculatorBarIndex))}>.</button>
+          <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("eql", calculatorBarIndex))}>=</button>
+          <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("CE", calculatorBarIndex))}>CE</button>
+        </div>
+        <div>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("mult", calculatorBarIndex))}>*</button>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("div", calculatorBarIndex))}>/</button>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("exp", calculatorBarIndex))}>^</button>
@@ -52,23 +57,59 @@ function barUpdaterFunc(key: string, calculatorBarIndex: number) {
   //define all codes for our calculator to use
   
   if (key === "one"){
-    ourResStr += "1"
-  }else if (key === "two"){
-    ourResStr += "2"
-  }else if (key === "three"){
-    ourResStr += "3"
-  }else if (key === "four"){
-    ourResStr += "4"
-  }else if (key === "five"){
-    ourResStr += "5"
-  }else if (key === "six"){
-    ourResStr += "6"
-  }else if (key === "seven"){
-    ourResStr += "7"
-  }else if (key === "eight"){
-    ourResStr += "8"
-  }else if (key === "nine"){
-    ourResStr += "9"
+    ourResStr += "1";
+  }
+  else if (key === "two"){
+    ourResStr += "2";
+  }
+  else if (key === "three"){
+    ourResStr += "3";
+  }
+  else if (key === "four"){
+    ourResStr += "4";
+  }
+  else if (key === "five"){
+    ourResStr += "5";
+  }
+  else if (key === "six"){
+    ourResStr += "6";
+  }
+  else if (key === "seven"){
+    ourResStr += "7";
+  }
+  else if (key === "eight"){
+    ourResStr += "8";
+  }
+  else if (key === "nine"){
+    ourResStr += "9";
+  }
+  else if (key === "zero"){
+    ourResStr += "0";
+  }
+  else if (key === "add"){
+    ourResStr += "+";
+  }
+  else if (key === "sub"){
+    ourResStr += "-";
+  }
+  else if (key === "div"){
+    ourResStr += "/";
+  }
+  else if (key === "mult"){
+    ourResStr += "*";
+  }
+  else if (key === "exp"){
+    ourResStr += "^";
+  }
+  else if (key === "CE"){
+    ourResStr = "0";
+  }
+  else if (key === "eql"){
+    ourResStr += "=";
+    //idk
+  }
+  else if (key === "dot"){
+    ourResStr += ".";
   }
   console.log(ourResStr)
   return Number(ourResStr)
