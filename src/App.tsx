@@ -7,9 +7,69 @@ let operator: string = "";
 let firstHalf: string = "";
 let currentHalf: string = "";
 
+
+
+
 function App() {
   const [calculatorBarIndex, updateCalculatorBar] = useState("")
 
+  function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
+    console.log(event.key)
+    //this function will click appropriate button for the user using key-codes
+    let keyCode: any = event.key;
+    if (keyCode === "1"){
+      updateCalculatorBar(barUpdaterFunc("one", calculatorBarIndex))
+    }
+    else if (keyCode === "2"){
+      updateCalculatorBar(barUpdaterFunc("two", calculatorBarIndex))
+    }
+    else if (keyCode === "3"){
+      updateCalculatorBar(barUpdaterFunc("three", calculatorBarIndex))
+    }
+    else if (keyCode === "4"){
+      updateCalculatorBar(barUpdaterFunc("four", calculatorBarIndex))
+    }
+    else if (keyCode === "5"){
+      updateCalculatorBar(barUpdaterFunc("five", calculatorBarIndex))
+    }
+    else if (keyCode === "6"){
+      updateCalculatorBar(barUpdaterFunc("six", calculatorBarIndex))
+    }
+    else if (keyCode === "7"){
+      updateCalculatorBar(barUpdaterFunc("seven", calculatorBarIndex))
+    }
+    else if (keyCode === "8"){
+      updateCalculatorBar(barUpdaterFunc("eight", calculatorBarIndex))
+    }
+    else if (keyCode === "9"){
+      updateCalculatorBar(barUpdaterFunc("nine", calculatorBarIndex))
+    }
+    else if (keyCode === "0"){
+      updateCalculatorBar(barUpdaterFunc("zero", calculatorBarIndex))
+    }
+    else if (keyCode === "-"){
+      updateCalculatorBar(barUpdaterFunc("sub", calculatorBarIndex))
+    }
+    else if (keyCode === "+"){
+      updateCalculatorBar(barUpdaterFunc("add", calculatorBarIndex))
+    }
+    else if (keyCode === "*"){
+      updateCalculatorBar(barUpdaterFunc("mult", calculatorBarIndex))
+    }
+    else if (keyCode === "/"){
+      updateCalculatorBar(barUpdaterFunc("div", calculatorBarIndex))
+    }
+    else if (keyCode === "^"){
+      updateCalculatorBar(barUpdaterFunc("exp", calculatorBarIndex))
+    }
+    else if (keyCode === "Enter"){
+      updateCalculatorBar(barUpdaterFunc("eql", calculatorBarIndex))
+    }
+    else if (keyCode === "Escape"){
+      updateCalculatorBar(barUpdaterFunc("CE", calculatorBarIndex))
+    }
+  
+  }
   // const handleKeyDown = (event: any) => {
   //   // Check if the Backspace key was pressed (key code 8) and the input value is not empty
   //   if (event.keyCode === 8 && inputValue.length > 0) {
@@ -22,7 +82,7 @@ function App() {
     <div className="main">
       <section className="calculator-body">
         
-      <input type="text" value={calculatorBarIndex} id="calculator-input"   />
+      <input type="text" value={calculatorBarIndex} id="calculator-input" onKeyDown={(Event) => handleKeyPress(Event)}/>
         <img src={logo} className="react-logo" alt="logo" />
         <div>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("neg", calculatorBarIndex))}>+/-</button>
