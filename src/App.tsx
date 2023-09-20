@@ -2,7 +2,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 
-
+//global 'operator' variable, I am sure there are better ways to implement this logic, but due to time constraints I'll stick with this approach for now.
+let operator: string = "";
+let firstHalf: string = "";
 
 function App() {
   const [calculatorBarIndex, updateCalculatorBar] = useState(0)
@@ -47,7 +49,7 @@ function App() {
 }
 
 function barUpdaterFunc(key: string, calculatorBarIndex: number) {
-  let ourResStr: String = "";
+  let ourResStr: string = "";
   
 
   if (calculatorBarIndex !== 0)
@@ -86,33 +88,70 @@ function barUpdaterFunc(key: string, calculatorBarIndex: number) {
   else if (key === "zero"){
     ourResStr += "0";
   }
-  else if (key === "add"){
-    ourResStr += "+";
-  }
-  else if (key === "sub"){
-    ourResStr += "-";
-  }
-  else if (key === "div"){
-    ourResStr += "/";
-  }
-  else if (key === "mult"){
-    ourResStr += "*";
-  }
-  else if (key === "exp"){
-    ourResStr += "^";
-  }
   else if (key === "CE"){
     ourResStr = "0";
   }
+  else if (key === "add"){
+    operator = "+";
+    firstHalf = ourResStr;
+    ourResStr = "0";
+  }
+  else if (key === "sub"){
+    operator = "-";
+    firstHalf = ourResStr;
+    ourResStr = "0";
+  }
+  else if (key === "div"){
+    operator = "/";
+    firstHalf = ourResStr;
+    ourResStr = "0";
+  }
+  else if (key === "mult"){
+    operator = "*";
+    firstHalf = ourResStr;
+    ourResStr = "0";
+  }
+  else if (key === "exp"){
+    operator = "^";
+    firstHalf = ourResStr;
+    ourResStr = "0";
+  }
   else if (key === "eql"){
-    ourResStr += "=";
-    //idk
+    if (firstHalf !== ""){
+      let answer: number  = 0;
+      if (operator === "+"){
+        answer = Number(firstHalf) + Number(ourResStr);
+      }
+      else if (operator === "-"){
+        answer = Number(firstHalf) - Number(ourResStr);
+      }
+      else if (operator === "/"){
+        answer = Number(firstHalf) / Number(ourResStr);
+      }
+      else if (operator === "*"){
+        answer = Number(firstHalf) * Number(ourResStr);
+      }
+      else if (operator === "^"){
+        answer = Number(firstHalf) ** Number(ourResStr);
+      }
+      ourResStr = answer.toString();
+      console.log(answer);
+      operator = "";
+      firstHalf = "";
+      return answer;
+    }
   }
   else if (key === "dot"){
-    ourResStr += ".";
+    operator = ".";
   }
-  console.log(ourResStr)
+  if (firstHalf !== ""){
+  console.log(firstHalf+operator+ourResStr)
+  }
+  else{
+    console.log(ourResStr)
+  }
   return Number(ourResStr)
 }
+
 
 export default App;
