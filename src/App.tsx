@@ -5,20 +5,24 @@ import { useState } from "react";
 //global 'operator' variable, I am sure there are better ways to implement this logic, but due to time constraints I'll stick with this approach for now.
 let operator: string = "";
 let firstHalf: string = "";
-
-//function to make our component for displaying numbers in the calculator bar
-function BarDisplayComp(toDisplay: string){
-  return <input type="text" value={toDisplay} id="calculator-input" />
-}
+let currentHalf: string = "";
 
 function App() {
-  const [calculatorBarIndex, updateCalculatorBar] = useState(0)
-  
+  const [calculatorBarIndex, updateCalculatorBar] = useState("")
+
+  // const handleKeyDown = (event: any) => {
+  //   // Check if the Backspace key was pressed (key code 8) and the input value is not empty
+  //   if (event.keyCode === 8 && inputValue.length > 0) {
+  //     // Remove the last character from the input value
+  //     setInputValue(inputValue.slice(0, -1));
+  //   }
+  // }; onKeyDown={handleKeyDown}
 
   return (
     <div className="main">
       <section className="calculator-body">
-      <input type="text" value={firstHalf+operator+calculatorBarIndex} id="calculator-input" />
+        
+      <input type="text" value={calculatorBarIndex} id="calculator-input"   />
         <img src={logo} className="react-logo" alt="logo" />
         <div>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("neg", calculatorBarIndex))}>+/-</button>
@@ -55,215 +59,269 @@ function App() {
   );
 }
 
-function barUpdaterFunc(key: string, calculatorBarIndex: number) {
-  let ourResStr: string = "";
-  
+function barUpdaterFunc(key: string, calculatorBarIndex: string) {
+  console.log(calculatorBarIndex.toString())
 
-  if (calculatorBarIndex !== 0)
-    //non-empty calc-bar
-    ourResStr += calculatorBarIndex.toString();
 
   //define all codes for our calculator to use
   if (key === "one"){
-    ourResStr += "1";
+    currentHalf += "1";
   }
   else if (key === "two"){
-    ourResStr += "2";
+    currentHalf += "2";
   }
   else if (key === "three"){
-    ourResStr += "3";
+    currentHalf += "3";
   }
   else if (key === "four"){
-    ourResStr += "4";
+    currentHalf += "4";
   }
   else if (key === "five"){
-    ourResStr += "5";
+    currentHalf += "5";
   }
   else if (key === "six"){
-    ourResStr += "6";
+    currentHalf += "6";
   }
   else if (key === "seven"){
-    ourResStr += "7";
+    currentHalf += "7";
   }
   else if (key === "eight"){
-    ourResStr += "8";
+    currentHalf += "8";
   }
   else if (key === "nine"){
-    ourResStr += "9";
+    currentHalf += "9";
   }
   else if (key === "zero"){
-    ourResStr += "0";
+    currentHalf += "0";
   }
   else if (key === "CE"){
-    ourResStr = "0";
+    currentHalf = "0";
     operator = "";
     firstHalf = "";
   }
-  else if (key === "add"){
-    //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
-    if (operator !== ""){
-      let answer: number  = 0;
-      if (operator === "+"){
-        answer = Number(firstHalf) + Number(ourResStr);
+
+  if (currentHalf !== ""){
+    //addition
+    if (key === "add"){
+      //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
+      if (operator !== ""){
+        let answer: number  = 0;
+        if (firstHalf === ""){
+          firstHalf = "0";
+        }
+
+        if (operator === "+"){
+          answer = Number(firstHalf) + Number(currentHalf);
+        }
+        else if (operator === "-"){
+          answer = Number(firstHalf) - Number(currentHalf);
+        }
+        else if (operator === "/"){
+          answer = Number(firstHalf) / Number(currentHalf);
+        }
+        else if (operator === "*"){
+          answer = Number(firstHalf) * Number(currentHalf);
+        }
+        else if (operator === "^"){
+          answer = Number(firstHalf) ** Number(currentHalf);
+        }
+        firstHalf = answer.toString();
       }
-      else if (operator === "-"){
-        answer = Number(firstHalf) - Number(ourResStr);
+      else{
+        firstHalf = currentHalf.toString();
       }
-      else if (operator === "/"){
-        answer = Number(firstHalf) / Number(ourResStr);
-      }
-      else if (operator === "*"){
-        answer = Number(firstHalf) * Number(ourResStr);
-      }
-      else if (operator === "^"){
-        answer = Number(firstHalf) ** Number(ourResStr);
-      }
-      ourResStr = answer.toString();
-      firstHalf = ourResStr;
+      operator = "+";
+      currentHalf = "";
     }
-    operator = "+";
-    firstHalf = ourResStr;
-    ourResStr = "0";
-  }
-  else if (key === "sub"){
-    //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
-    if (operator !== ""){
-      let answer: number  = 0;
-      if (operator === "+"){
-        answer = Number(firstHalf) + Number(ourResStr);
+
+    //subtraction
+    else if (key === "sub"){
+      //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
+      if (operator !== ""){
+        let answer: number  = 0;
+        if (firstHalf === ""){
+          firstHalf = "0";
+        }
+
+        if (operator === "+"){
+          answer = Number(firstHalf) + Number(currentHalf);
+        }
+        else if (operator === "-"){
+          answer = Number(firstHalf) - Number(currentHalf);
+        }
+        else if (operator === "/"){
+          answer = Number(firstHalf) / Number(currentHalf);
+        }
+        else if (operator === "*"){
+          answer = Number(firstHalf) * Number(currentHalf);
+        }
+        else if (operator === "^"){
+          answer = Number(firstHalf) ** Number(currentHalf);
+        }
+        firstHalf = answer.toString();
       }
-      else if (operator === "-"){
-        answer = Number(firstHalf) - Number(ourResStr);
+      else{
+        firstHalf = currentHalf.toString();
       }
-      else if (operator === "/"){
-        answer = Number(firstHalf) / Number(ourResStr);
-      }
-      else if (operator === "*"){
-        answer = Number(firstHalf) * Number(ourResStr);
-      }
-      else if (operator === "^"){
-        answer = Number(firstHalf) ** Number(ourResStr);
-      }
-      ourResStr = answer.toString();
-      firstHalf = ourResStr;
+      operator = "-";
+      currentHalf = "";
     }
-    operator = "-";
-    firstHalf = ourResStr;
-    ourResStr = "0";
-  }
-  else if (key === "div"){
-    //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
-    if (operator !== ""){
-      let answer: number  = 0;
-      if (operator === "+"){
-        answer = Number(firstHalf) + Number(ourResStr);
+
+
+    //multiplication
+    else if (key === "mult"){
+      //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
+      if (operator !== ""){
+        let answer: number  = 0;
+        if (firstHalf === ""){
+          firstHalf = "0";
+        }
+
+        if (operator === "+"){
+          answer = Number(firstHalf) + Number(currentHalf);
+        }
+        else if (operator === "-"){
+          answer = Number(firstHalf) - Number(currentHalf);
+        }
+        else if (operator === "/"){
+          answer = Number(firstHalf) / Number(currentHalf);
+        }
+        else if (operator === "*"){
+          answer = Number(firstHalf) * Number(currentHalf);
+        }
+        else if (operator === "^"){
+          answer = Number(firstHalf) ** Number(currentHalf);
+        }
+        firstHalf = answer.toString();
       }
-      else if (operator === "-"){
-        answer = Number(firstHalf) - Number(ourResStr);
+      else{
+        firstHalf = currentHalf.toString();
       }
-      else if (operator === "/"){
-        answer = Number(firstHalf) / Number(ourResStr);
-      }
-      else if (operator === "*"){
-        answer = Number(firstHalf) * Number(ourResStr);
-      }
-      else if (operator === "^"){
-        answer = Number(firstHalf) ** Number(ourResStr);
-      }
-      ourResStr = answer.toString();
-      firstHalf = ourResStr;
+      operator = "*";
+      currentHalf = "";
     }
-    operator = "/";
-    firstHalf = ourResStr;
-    ourResStr = "0";
-  }
-  else if (key === "mult"){
-    //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
-    if (operator !== ""){
-      let answer: number  = 0;
-      if (operator === "+"){
-        answer = Number(firstHalf) + Number(ourResStr);
+
+
+    //division
+    else if (key === "div"){
+      //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
+      if (operator !== ""){
+        let answer: number  = 0;
+        if (firstHalf === ""){
+          firstHalf = "0";
+        }
+
+        if (operator === "+"){
+          answer = Number(firstHalf) + Number(currentHalf);
+        }
+        else if (operator === "-"){
+          answer = Number(firstHalf) - Number(currentHalf);
+        }
+        else if (operator === "/"){
+          answer = Number(firstHalf) / Number(currentHalf);
+        }
+        else if (operator === "*"){
+          answer = Number(firstHalf) * Number(currentHalf);
+        }
+        else if (operator === "^"){
+          answer = Number(firstHalf) ** Number(currentHalf);
+        }
+        firstHalf = answer.toString();
       }
-      else if (operator === "-"){
-        answer = Number(firstHalf) - Number(ourResStr);
+      else{
+        firstHalf = currentHalf.toString();
       }
-      else if (operator === "/"){
-        answer = Number(firstHalf) / Number(ourResStr);
-      }
-      else if (operator === "*"){
-        answer = Number(firstHalf) * Number(ourResStr);
-      }
-      else if (operator === "^"){
-        answer = Number(firstHalf) ** Number(ourResStr);
-      }
-      ourResStr = answer.toString();
-      firstHalf = ourResStr;
+      operator = "/";
+      currentHalf = "";
     }
-    operator = "*";
-    firstHalf = ourResStr;
-    ourResStr = "0";
-  }
-  else if (key === "exp"){
-    //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
-    if (operator !== ""){
-      let answer: number  = 0;
-      if (operator === "+"){
-        answer = Number(firstHalf) + Number(ourResStr);
+
+    //exponents
+    else if (key === "exp"){
+      //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
+      if (operator !== ""){
+        let answer: number  = 0;
+        if (firstHalf === ""){
+          firstHalf = "0";
+        }
+
+        if (operator === "+"){
+          answer = Number(firstHalf) + Number(currentHalf);
+        }
+        else if (operator === "-"){
+          answer = Number(firstHalf) - Number(currentHalf);
+        }
+        else if (operator === "/"){
+          answer = Number(firstHalf) / Number(currentHalf);
+        }
+        else if (operator === "*"){
+          answer = Number(firstHalf) * Number(currentHalf);
+        }
+        else if (operator === "^"){
+          answer = Number(firstHalf) ** Number(currentHalf);
+        }
+        firstHalf = answer.toString();
       }
-      else if (operator === "-"){
-        answer = Number(firstHalf) - Number(ourResStr);
+      else{
+        firstHalf = currentHalf.toString();
       }
-      else if (operator === "/"){
-        answer = Number(firstHalf) / Number(ourResStr);
-      }
-      else if (operator === "*"){
-        answer = Number(firstHalf) * Number(ourResStr);
-      }
-      else if (operator === "^"){
-        answer = Number(firstHalf) ** Number(ourResStr);
-      }
-      ourResStr = answer.toString();
-      firstHalf = ourResStr;
+      operator = "^";
+      currentHalf = "";
     }
-    operator = "^";
-    firstHalf = ourResStr;
-    ourResStr = "0";
-  }
-  else if (key === "eql"){
+
+    //equals code
+    else if (key === "eql"){
+      let answer: number  = Number(currentHalf);
+      //I can definetly get rid of a lot REPETIVE code that keeps showing up over and over again (that is make some helpler function, but no time for that right now)
+      if (operator !== ""){
+        if (operator === "+"){
+          answer = Number(firstHalf) + Number(currentHalf);
+        }
+        else if (operator === "-"){
+          answer = Number(firstHalf) - Number(currentHalf);
+        }
+        else if (operator === "/"){
+          answer = Number(firstHalf) / Number(currentHalf);
+        }
+        else if (operator === "*"){ 
+          answer = Number(firstHalf) * Number(currentHalf);
+        }
+        else if (operator === "^"){
+          answer = Number(firstHalf) ** Number(currentHalf);
+        }
+      }
+      firstHalf="";
+      operator="";
+      currentHalf = answer.toString();
+    }
+
+
+
+    else if (key === "neg"){
+      currentHalf = (Number(currentHalf) * (-1)).toString();
+    }
+    // if (firstHalf !== ""){
+    // console.log(firstHalf+operator+ourResStr)
+    // }
+    // else{
+    //   console.log(ourResStr)
+    // }
+    // if (currentHalf[0] === "0"){
+    //   currentHalf = currentHalf.slice(1);
+    // }
     if (firstHalf !== ""){
-      let answer: number  = 0;
-      if (operator === "+"){
-        answer = Number(firstHalf) + Number(ourResStr);
-      }
-      else if (operator === "-"){
-        answer = Number(firstHalf) - Number(ourResStr);
-      }
-      else if (operator === "/"){
-        answer = Number(firstHalf) / Number(ourResStr);
-      }
-      else if (operator === "*"){
-        answer = Number(firstHalf) * Number(ourResStr);
-      }
-      else if (operator === "^"){
-        answer = Number(firstHalf) ** Number(ourResStr);
-      }
-      ourResStr = answer.toString();
-      console.log(answer);
-      operator = "";
-      firstHalf = "";
-      return answer;
+      firstHalf = (Number(firstHalf)).toString();
+    }
+    if (currentHalf !== ""){
+      currentHalf = (Number(currentHalf)).toString();
     }
   }
-  else if (key === "neg"){
-    ourResStr = (Number(ourResStr) * (-1)).toString()
+  if (firstHalf+operator+currentHalf ==="Infinity"){
+    return "DONT DIVIDE BY ZERO!!!"
   }
-  if (firstHalf !== ""){
-  console.log(firstHalf+operator+ourResStr)
+  else if (firstHalf+operator+currentHalf === "NaN"){
+    return "Now you must press CE..."
   }
-  else{
-    console.log(ourResStr)
-  }
-  return Number(ourResStr)
+  return firstHalf+operator+currentHalf;
 }
 
 
