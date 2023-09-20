@@ -6,12 +6,19 @@ import { useState } from "react";
 let operator: string = "";
 let firstHalf: string = "";
 
+//function to make our component for displaying numbers in the calculator bar
+function BarDisplayComp(toDisplay: string){
+  return <input type="text" value={toDisplay} id="calculator-input" />
+}
+
 function App() {
   const [calculatorBarIndex, updateCalculatorBar] = useState(0)
+  
+
   return (
     <div className="main">
       <section className="calculator-body">
-        <input type="text" value={"TODO: makee this work ;)"} id="calculator-input" />
+      <input type="text" value={firstHalf+operator+calculatorBarIndex} id="calculator-input" />
         <img src={logo} className="react-logo" alt="logo" />
         <div>
           <button className="calculator-button" onClick={() => updateCalculatorBar(barUpdaterFunc("neg", calculatorBarIndex))}>+/-</button>
@@ -89,6 +96,8 @@ function barUpdaterFunc(key: string, calculatorBarIndex: number) {
   }
   else if (key === "CE"){
     ourResStr = "0";
+    operator = "";
+    firstHalf = "";
   }
   else if (key === "add"){
     operator = "+";
